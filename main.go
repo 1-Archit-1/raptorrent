@@ -15,6 +15,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(torrent.ExtractUrls())
-
+	//fmt.Println(torrent.ExtractUrls())
+	//fmt.Println(filehandler.UnpackPieces(torrent))
+	filehandler.CreateInfoHash(torrent)
 }

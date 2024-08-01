@@ -1,6 +1,7 @@
 package filehandler
 
 import (
+	"fmt"
 	"io"
 	"os"
 
@@ -25,16 +26,24 @@ type bencodeTorrent struct {
 	Info         bencodeInfo `bencode:"info"`
 }
 
-func (torrent *bencodeTorrent) ExtractUrls() []string {
-	var urls []string
-	if torrent.Announce != "" {
-		urls = append(urls, torrent.Announce)
-	}
-	for _, tier := range torrent.AnnounceList {
-		urls = append(urls, tier...)
-	}
-	return urls
-}
+// func (torrent *bencodeTorrent) ExtractUrls() []string {
+// 	var urls []string
+// 	if torrent.Announce != "" {
+// 		urls = append(urls, torrent.Announce)
+// 	}
+// 	for _, tier := range torrent.AnnounceList {
+// 		urls = append(urls, tier...)
+// 	}
+// 	return urls
+// }
+// func UnpackPieces(torrent *bencodeTorrent) []string {
+// 	pieces_list := make([]string, 0, len(torrent.Info.Pieces)/20)
+// 	for i := 0; i < len(torrent.Info.Pieces); i += 20 {
+// 		pieces_list = append(pieces_list, torrent.Info.Pieces[i:i+20])
+// 	}
+// 	return pieces_list
+// }
+
 func ExtractData(filehandle *os.File) (*bencodeTorrent, error) {
 	file := filehandle
 
@@ -45,4 +54,8 @@ func ExtractData(filehandle *os.File) (*bencodeTorrent, error) {
 		return nil, err
 	}
 	return &content, nil
+}
+
+func CreateInfoHash(torrent *bencodeTorrent) {
+	fmt.Println(torrent.Info)
 }
